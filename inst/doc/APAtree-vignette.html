@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Jonas Glatthorn" />
+
+
+<title>APAtree-vignette</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">APAtree-vignette</h1>
+<h4 class="author">Jonas Glatthorn</h4>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>The <code>APAtree</code>-package calculates maps of the the ‘area potentially available’ to trees (APA-maps) out of tree inventory data from one or more research plots. The APA is a measure for the growing space of trees that sums up to the stand area (Gspaltl et al. 2012, Römisch 1995). This is done by computing a rasterized version of ‘weighted voronoi diagrams’ using an approximation of the trees competitive ability (e.g., crown radius, leaf area) as weight. Based on APA-maps, several APA-properties that describe tree proportions and diversity of complete forest stands or of neighborhoods around individual trees are implemented in this package (Gspaltl. et al. 2012, Glatthorn 2021). This Vignette is a step by step user guide about how to use the most important functions of the <code>APAtree</code>-package. For methodological details please consult the original references.</p>
+</div>
+<div id="creating-some-example-data" class="section level2">
+<h2>Creating some example data</h2>
+<p>To exemplarily demonstrate the functionality of <code>APAtree</code>, first some data that has the typical structure of tree inventory data is required.</p>
+<p>The <code>APAtree</code>-package calculates maps of the the ‘area potentially available’ to trees (APA-maps) out of tree inventory data from one or more research plots. The APA is a measure for the growing space of trees that sums up to the stand area (Gspaltl et al. 2012). In this package the approach to derive APA-maps from Gspaltl et al. (2012) that is based on a rasterized version of weighted Voronoi diagrams is implemented. In this approach, the complete stand area is rasterized into a regular grid and each grid cell is assigned to the closest tree, weighted by a tree trait that approximates the trees competitive ability (e.g., the crown radius). Based on APA-maps, several APA-properties that describe tree proportions and diversity of complete forest stands or of neighborhoods around individual trees are implemented in this package (Gspaltl. et al. 2012, Glatthorn 2021). This Vignette is a step by step user guide about how to use the most important functions of the <code>APAtree</code>-package, for methodological details please consult the original references.</p>
+</div>
+<div id="creating-some-example-data-1" class="section level2">
+<h2>Creating some example data</h2>
+<p>To exemplarily demonstrate the functionality of , first some data that has the typical structure of tree inventory data is required.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(APAtree)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: raster</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: sp</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: sf</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Linking to GEOS 3.6.2, GDAL 2.2.3, PROJ 4.9.3</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># invent some tree data</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>example_tree_dat <span class="ot">&lt;-</span> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">id_tree =</span> <span class="fu">as.character</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">id_plot =</span> <span class="st">&quot;A&quot;</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">weight =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="fl">2.6</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">species =</span> <span class="fu">c</span>(<span class="st">&quot;F&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;P&quot;</span>, <span class="st">&quot;P&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;P&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;P&quot;</span>),</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">12</span>, <span class="dv">7</span>),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">8</span>, <span class="dv">4</span>, <span class="dv">11</span>, <span class="dv">7</span>, <span class="fl">1.5</span>, <span class="dv">7</span>, <span class="sc">-</span><span class="dv">1</span>))</span></code></pre></div>
+<p>This example dataset contains a minimum amount of variable to create APA-maps:</p>
+<ul>
+<li><strong>id_tree:</strong> A unique tree id (character), no two trees are allowed to have the same id.</li>
+<li><strong>id_plot:</strong> A plot id (character). A second dataset about the layout of the research plots necessary to calculate APA-maps. The datasets will be linked via the plot id column.</li>
+<li><strong>weight:</strong> A numeric positive variable that is used as weight to account for trees with different competitive abilities (mainly due to tree size). In real datasets, a trait that approximates the competitive ability such as the crown radius, diameter or leaf area should be chosen.</li>
+<li><strong>species</strong> (optional): A character variable to group certain trees (does not necessarily have to be species, could be tree size classes as well).</li>
+<li><strong>x</strong> and <strong>y</strong>: numeric variables to specify tree coordinates. The coordinates can be in a local coordinate system (e.g., relative to the plot center or plot corner) or they can be in a geographic coordinate reference system. The reference system has to be metric.</li>
+</ul>
+<p>The tree data is spatial vector data. The <code>sf</code>-package is used by <code>APAtree</code> to work with spatial data. First, the tree data needs to be converted to <code>sf</code>-objects. If tree and plot data is available as geodata, it can directly be imported using the <code>sf::st_read()</code>-function as well.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>example_tree_dat <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(example_tree_dat, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>))</span></code></pre></div>
+<p>Additionally, the plot area needs to be specified as <code>POLYGON</code>-data, again as <code>sf</code>-object. If available, a buffer area surrounding the actual core plot where additional tree data was recorded to avoid edge-effects may be specified (plus-sampling).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A test plot area surrounding the threes</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plot_poly <span class="ot">&lt;-</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_polygon</span>(<span class="at">x =</span> <span class="fu">list</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_sfc</span>()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>buffer_poly <span class="ot">&lt;-</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_polygon</span>(<span class="at">x =</span> <span class="fu">list</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">13</span>, <span class="dv">13</span>, <span class="dv">13</span>, <span class="dv">13</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                             <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_sfc</span>()</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>example_plot_dat <span class="ot">&lt;-</span> </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_sf</span>(<span class="at">id_plot =</span> <span class="st">&quot;A&quot;</span>, </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">buffer_geometry =</span> buffer_poly,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">border_geometry =</span> plot_poly)</span></code></pre></div>
+<p>The plot dataset only has three relevant columns:</p>
+<ul>
+<li><strong>id_plot</strong> The unique plot id that is used to relate tree and plot data;</li>
+<li><strong>buffer_geometry</strong> The total area where trees were recorded as <code>sfc_POLYGON</code>-column;</li>
+<li><strong>border_geometry</strong> The actual core area of interest as <code>sfc_POLYGON</code>-column.</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mai =</span> <span class="fu">rep</span>(<span class="fl">0.01</span>, <span class="dv">4</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(example_plot_dat<span class="sc">$</span>buffer_geometry)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(example_plot_dat<span class="sc">$</span>border_geometry, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(example_tree_dat<span class="sc">$</span>geometry, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAMAAABlApw1AAAAz1BMVEUKCgoLCwsMDAwNDQ0ODg4TExMUFBQbGxscHBwdHR0pKSkqKiorKystLS0yMjIzMzM0NDQ1NTU2NjY4ODg7OztAQEBCQkJDQ0NERERhYWFiYmJjY2NlZWVmZmZoaGhpaWlsbGx3d3d6enp8fHx9fX1/f3+CgoKDg4OFhYWIiIiwsLCxsbGzs7O0tLS1tbW3t7e4uLi8vLy9vb2+vr6/v7/AwMDQ0NDr6+vt7e3u7u7v7+/w8PDx8fHy8vL4+Pj5+fn7+/v8/Pz9/f3+/v7///+/Uc/JAAAACXBIWXMAAA7DAAAOwwHHb6hkAAADeklEQVR4nO2c7VITQRBFI0HFb9Cg8dugUZSIGjGgICQk7/9MktIf2WVnZ7enp+8M3vMjKaqGS5/KstvQVd1ZZE4HXUAoFEBDATRXRmDyMTMmJYFhb5AVvWFZYLjIiiEFwFAADQXQUAANBdBQAA0F0FCgKaencXKNBMabnc7WOEayjcDerf3ZbLQxihBtI3D7YPk6vhsh2kTgpDtfvs27v/WzTQXWchVY3Pm+fP12L0K0jcBoY286/XRzP0K00W304GHn2qMfMZLNHmRnZ3Fy2UqgoQCa/1DAeAIy8ZTTXsB2AtLzltNewPQaa14OBeJAAUGkKhQQRKpCAUGkKhQQRKpCAUGkKhQQRKpCAUHkCuFTDaiAxlQDKaAy1UAKqEw1gAI6U40EBMKmGshLSGWqgRRQmWpAb6MaUw3wgyx8qsFW4h8rPUEKAlXl1AkUegK8QHU5NQLFngAu4CinRqDYE8AFHOW4BUo9AVrAVY5fYC0tgXI5NZdQsSdAC7jKqREo9gRwAUc5dbfRQk8AF3CUU/8gW+kJ8ALV5VzxVqJNpCoUEESqQgFBpCoUEESqQgFBpCoUEESqko6AcNaRioB41pGIgHzWkYiAfNaRhkDArCMtAcGsIw2BgFlHIgLyWUciAvJZRyoC4llHOgJCMhKo7jWyEXD1GrkIOHuNXAScvUYmAu5eIzOBy71GJgLuXiMXAWevkYuAs9fIRsDVa2QkIPxpFIgMBQSRqlBAEKkKBQSRqlBAEKkKBZpGRt9A5T0QJGCwgcp7IETAYgOV90CIgMUGKu+BAAGTDVTeAwoCUTdQeQ9cEph/3tmp+od+RaTFBirvgbLAr+2t3d3N7eMmkRYbqLwHygJP31xcF+evnzeKNNhA5T1QEph2fy7fjtZnzSKjb6DyHigJHN74++X1w9aRqsg/gfWj5VvjTyAW8t+BZ6/OL34HXr5oH6mKXOD48YP3H+4/OWkfqUrIg+zL23dfJZGq8O8BQaQqFBBEqkIBQaQqFBBEqkIBQaQqFKj4jr7lssu+vsDEctnlYKC/rjMxKICGAmjAAoo7rBACqjusAAK6O6wAAro7rOwFlHdY4QSUdlgBLiHdHVYAAd0dVojbqOoOK8yDTHGHFVsJEBRAQwE0FEBDATQUQEMBNBRAc1nAdH4RTr8sYDy/CGdSEsgWCqChABoKoPkDxez1D0XdHscAAAAASUVORK5CYII=" style="display: block; margin: auto;" /></p>
+</div>
+<div id="create-and-plot-an-apa_list" class="section level2">
+<h2>Create and plot an <code>apa_list</code></h2>
+<p>The main work is done by the <code>apa_list</code>-function that returns an object of class <code>apa_list</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>example_apa_list <span class="ot">&lt;-</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apa_list</span>(<span class="at">tree_dat =</span> example_tree_dat,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">plot_dat =</span> example_plot_dat, </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">plot_id_column =</span> <span class="st">&quot;id_plot&quot;</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">tree_id_column =</span> <span class="st">&quot;id_tree&quot;</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">core_column =</span> <span class="st">&quot;border_geometry&quot;</span>, </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">buffer_column =</span> <span class="st">&quot;buffer_geometry&quot;</span>, </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">weight_column =</span> <span class="st">&quot;weight&quot;</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">apa_polygon =</span>  <span class="cn">TRUE</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Generating APA-maps:</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A  </span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Starting polygonization:</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `tree_dat` - polygonizing APA-patches:</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(example_apa_list)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; List with APA-maps of 1 plot and 9 trees.</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; plot id column:      id_plot (&quot;A&quot;)</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; bbox:                xmin: 0 xmax: 10 </span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                      ymin: 0 ymax: 10</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; CRS:                NA</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; resolution:          1</span></span></code></pre></div>
+<p>The actual APA-maps are stored as a list of <code>RasterStack</code>-objects from the <code>raster</code>-package (<code>?raster::stack</code>) in the <code>apa_list</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>example_apa_list<span class="sc">$</span>plot_dat<span class="sc">$</span>apa_map</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $A</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; class      : RasterStack </span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dimensions : 10, 10, 100, 2  (nrow, ncol, ncell, nlayers)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; resolution : 1, 1  (x, y)</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; extent     : 0, 10, 0, 10  (xmin, xmax, ymin, ymax)</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; crs        : NA </span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; names      : id_tree, critical </span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; min values :       1,        0 </span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; max values :       8,        1</span></span></code></pre></div>
+<p>There are at least two layers in each APA-map. The first one is the layer containing the APA-patches of individual trees, the second one is a binary layer called <code>critical</code>. The <code>critical</code>-layer contains information about potential edge-effects on the assignment of raster cells to trees. If a cell would be assigned to a large tree (as large as the largest one in the dataset) that may be located directly at the outer buffer-border, a raster cell is considered critical.</p>
+<p>To display the final <code>apa_list</code> graphically in different ways, use the <code>plot</code>-function (see <code>?plot.apa_list</code> for more information on how to configure the plot).</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Default settings</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(example_apa_list)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Do not color the critical area</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(example_apa_list, <span class="at">critical  =</span> <span class="cn">NA</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use custom colors </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(example_apa_list, <span class="at">critical  =</span> <span class="cn">NA</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">color_map =</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">data.frame</span>(<span class="at">species =</span> <span class="fu">c</span>(<span class="st">&quot;P&quot;</span>, <span class="st">&quot;F&quot;</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">color =</span> sf<span class="sc">::</span><span class="fu">sf.colors</span>(<span class="dv">2</span>, <span class="at">categorical =</span> <span class="cn">TRUE</span>)))</span></code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /> ## Calculation of APA-properties</p>
+<div id="apa-size" class="section level3">
+<h3>APA-size</h3>
+<p>The most straight forward property from an APA-map is the size of APA-patches, which can be calculated using the <code>apa_size()</code> function.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>example_apa_list_2 <span class="ot">&lt;-</span> <span class="fu">apa_size</span>(example_apa_list)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Aggregating APA-sizes:</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># The absolute size of the APA-patches within the core plot of all trees (NA means that the tree doesn&#39;t have an APA within the core plot).</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>example_apa_list_2<span class="sc">$</span>tree_dat<span class="sc">$</span>apa_size</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 16 13 17 25  2 13 NA  4 10</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># The relative size of the APA-patches within the core plot of all trees (NA means that the tree doesn&#39;t have an APA within the core plot).</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>example_apa_list_2<span class="sc">$</span>tree_dat<span class="sc">$</span>apa_size_prop</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.16 0.13 0.17 0.25 0.02 0.13   NA 0.04 0.10</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Information about the absolute size of the critical area of each tree</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>example_apa_list_2<span class="sc">$</span>tree_dat<span class="sc">$</span>critical_area</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  0  1  1  1  1  2 NA  3  1</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Information about the proportion of the total apa size of a tree that is critical</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>example_apa_list_2<span class="sc">$</span>tree_dat<span class="sc">$</span>critical</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.00000000 0.07692308 0.05882353 0.04000000 0.50000000 0.15384615         NA</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [8] 0.75000000 0.10000000</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co"># The critical area may be ignored when calculating the APA-size:</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>example_apa_list_3 <span class="ot">&lt;-</span> <span class="fu">apa_size</span>(example_apa_list, <span class="at">edge_correction =</span> <span class="st">&quot;critical&quot;</span>)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Aggregating APA-sizes:</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="co"># In this case, the APA-size gets smaller:</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>example_apa_list_2<span class="sc">$</span>tree_dat<span class="sc">$</span>apa_size <span class="sc">-</span> example_apa_list_3<span class="sc">$</span>tree_dat<span class="sc">$</span>apa_size</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  0  1  1  1  1  2 NA  3  1</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="co"># The apa_size_total column always gives the overall APA-size irrespective of the used edge-correction method: </span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>example_apa_list_3<span class="sc">$</span>tree_dat<span class="sc">$</span>apa_size_total</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 16 13 17 25  2 13 NA  4 10</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="co"># The relative apa size is always calculated relative to the APA-size with edge-correction: </span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(example_apa_list_3<span class="sc">$</span>tree_dat<span class="sc">$</span>apa_size <span class="sc">/</span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>            <span class="fu">sum</span>(example_apa_list_3<span class="sc">$</span>tree_dat<span class="sc">$</span>apa_size, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>          example_apa_list_3<span class="sc">$</span>tree_dat<span class="sc">$</span>apa_size_prop)</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+</div>
+<div id="neighborhood-diversity-ndiv" class="section level3">
+<h3>Neighborhood diversity NDiv</h3>
+<p>The species neighborhood diversity SpeciesNDiv is calculated with the <code>apa_ndiv()</code> function, using the <code>species</code>-column as trait to calculate dissimilarity. At tree-level, SpeciesNDiv is the proportion of mixed borders that a tree shares with its neighbors. Other numeric and/or categorical columns may be supplied to calculate neighborhood diversity regarding other sets of traits (see <code>?apa_ndiv</code> for more details).</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>example_apa_list_4 <span class="ot">&lt;-</span> <span class="fu">apa_ndiv</span>(example_apa_list, <span class="at">dis_trait_column =</span> <span class="st">&quot;species&quot;</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Aggregating APA-sizes:</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A  </span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Aggregating `species` neighborhood diversity:A</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># SpeciesNDiv of the trees (proportion of mixed borders surrounding each tree):</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>example_apa_list_4<span class="sc">$</span>tree_dat<span class="sc">$</span>species_ndiv</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.8000000 0.6000000 0.6111111 0.5500000 1.0000000 0.5555556        NA</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [8] 1.0000000 0.4000000</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co"># SpeciesNDiv at stand-level:</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>example_apa_list_4<span class="sc">$</span>plot_dat<span class="sc">$</span>species_ndiv</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.6196111</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Which is the weighted average of all individual SpeciesNDiv values:</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.mean</span>(example_apa_list_4<span class="sc">$</span>tree_dat<span class="sc">$</span>species_ndiv,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>              example_apa_list_4<span class="sc">$</span>tree_dat<span class="sc">$</span>apa_size,</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>              <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.6196111</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co"># As the APA-size is required for upscaling, it is always added before calculating NDiv.</span></span></code></pre></div>
+<p>if <code>pdiv = TRUE</code>, the proportion-based diversity (that ignores the spatial configuration of the stand) is provided as well. In case of the species diversity at stand-level, this would be Simpson diversity, for example.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pdiv</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>(<span class="at">pdiv =</span> example_apa_list_4<span class="sc">$</span>plot_dat<span class="sc">$</span>species_pdiv)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.455</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Simpson diversity using APA-sizes</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>species_apa_size <span class="ot">&lt;-</span> </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tapply</span>(example_apa_list_4<span class="sc">$</span>tree_dat<span class="sc">$</span>apa_size, </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>         example_apa_list_4<span class="sc">$</span>tree_dat<span class="sc">$</span>species,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>         sum, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>(simpson <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>((species_apa_size <span class="sc">/</span> <span class="dv">100</span>)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.455</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(pdiv, simpson)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+</div>
+<div id="aggregating-apa-properties-at-species-level" class="section level3">
+<h3>Aggregating APA-properties at species-level</h3>
+<p>Aggregation of APA-properties is done with the <code>apa_add_agg_class()</code> function. In this example, values are aggregated at species-level. Other tree related categories (e.g., height_classes) that are stored in the tree data set may be used as well.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The aggregation classes are specifies as columns of the tree data</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>example_apa_list_5 <span class="ot">&lt;-</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apa_add_agg_class</span>(example_apa_list, <span class="at">agg_class_column =</span> <span class="st">&quot;species&quot;</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Adding aggregation classes:</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; species</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `tree_dat` - polygonizing APA-patches:</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A  </span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `species` - polygonizing APA-patches:  A</span></span></code></pre></div>
+<p>All APA-properties are calculated for the aggregation classes as well</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>example_apa_list_6 <span class="ot">&lt;-</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apa_ndiv</span>(example_apa_list_5, <span class="at">dis_trait_column =</span> <span class="st">&quot;species&quot;</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Aggregating APA-sizes:</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A  </span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Aggregating `species` neighborhood diversity:A</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>example_apa_list_6<span class="sc">$</span>species[, <span class="fu">c</span>(<span class="st">&quot;species&quot;</span>, <span class="st">&quot;species_ndiv&quot;</span>)]</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Simple feature collection with 2 features and 2 fields</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Geometry type: MULTIPOLYGON</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Dimension:     XY</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Bounding box:  xmin: 0 ymin: 0 xmax: 10 ymax: 10</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; CRS:           NA</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   species species_ndiv                    apa_polygon</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       F    0.7600000 MULTIPOLYGON (((5 10, 7 10,...</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       P    0.5440171 MULTIPOLYGON (((0 10, 5 10,...</span></span></code></pre></div>
+</div>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>Glatthorn, Jonas (accepted). A spatially explicit index for tree species or trait diversity at neighborhood and stand level. Ecological Indicators.</p>
+<p>Gspaltl, M., Sterba, H., &amp; O’hara, K. L. (2012). The relationship between available area efficiency and area exploitation index in an even-aged coast redwood (Sequoia sempervirens) stand. Forestry, 85(5), 567-577.</p>
+<p>Römisch,K. (1995) Durchmesserwachstum und ebene Bestandesstruktur am Beispiel der Kiefernversuchsfläche Markersbach. In Deutscher Verband forstl. Forschungsanstalten, Sektion Biometrie und Informatik. Gottfried Hempel (ed.) Tagung Tharanth/Grillenburg, Vol. 8, pp. 84–103.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
