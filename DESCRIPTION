@@ -1,8 +1,8 @@
 Package: APAtree
 Type: Package
 Title: Computation of the 'Area Potentially Available' (APA) to Trees
-Version: 1.0.0
-Date: 2021-08-10
+Version: 1.0.1
+Date: 2021-08-17
 Author: Jonas Glatthorn
 Maintainer: Jonas Glatthorn <jonas.glatthorn@posteo.de>
 Description: Maps of the 'area potentially available' (APA) of trees is calculated from
@@ -12,7 +12,9 @@ Description: Maps of the 'area potentially available' (APA) of trees is calculat
   ability (e.g., crown radius, leaf area) as weight. The main output are 'Raster*'-
   objects from the 'raster' package that are stored together with the raw data in
   apa_list's, the main class of the 'APAtree' package. Aggregation functions are
-  provided to calculate the most important stand characteristics based on APA-maps.
+  provided to calculate stand characteristics based on APA-maps such as relative
+  proportions according to APA-size and the neighborhood diversity index NDiv
+  (Glatthorn (2021) <doi:10.1016/j.ecolind.2021.108073>).
 License: GPL (>= 2)
 URL: https://github.com/JonasGlatthorn/APAtree/
 BugReports: https://github.com/JonasGlatthorn/APAtree/issues/
@@ -28,6 +30,6 @@ Suggests: rmarkdown, knitr, testthat, dplyr, purrr, tibble, tidyr,
 VignetteBuilder: knitr
 LazyData: true
 NeedsCompilation: yes
-Packaged: 2021-08-13 05:33:14 UTC; jonas
+Packaged: 2021-08-17 08:29:56 UTC; jonas
 Repository: CRAN
-Date/Publication: 2021-08-16 08:00:07 UTC
+Date/Publication: 2021-08-17 16:20:19 UTC

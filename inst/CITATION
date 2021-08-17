@@ -5,14 +5,14 @@ citEntry(entry = "Article",
                               "trait diversity at neighborhood and stand level"),
          author       = personList(as.person("Jonas Glatthorn")),
          journal      = "Ecological Indicators",
-         year         = "accepted",
-         volume       = "",
+         year         = "2021",
+         volume       = "130",
          number       = "",
-         pages        = "",
+         pages        = "108073",
          url          = "",
          
          textVersion  =
-           paste("Glatthorn, Jonas (accepted). A spatially explicit index for",
-           "tree species or trait diversity at neighborhood and stand level.",
-           "Ecological Indicators.")
+           paste("Glatthorn, Jonas (2021). A spatially explicit index for tree
+#' species or trait diversity at neighborhood and stand level. Ecological
+#' Indicators, 130, 108073. https://doi.org/10.1016/j.ecolind.2021.108073.")
 )

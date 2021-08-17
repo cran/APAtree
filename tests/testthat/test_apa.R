@@ -6,30 +6,35 @@ library(tidyr)
 library(testthat)
 
 # Create test dataset with some trees ------------
-test_trees <- 
+test_trees <-
   data.frame(id_tree = as.character(1:9),
              id_plot = "A",
-             crown_radius_95 = c(4, 2.6, 4, 5, 3, 5, 3, 4, 5),
+             crown_radius_95 = c(4.02, 2.6, 4.01, 5.01, 3.01, 5, 3.02, 4.03, 5),
+             # note: if a grid cell center falls right in between two trees with
+             # equal weight, the selection of the tree is platform dependent, I
+             # assume due to small differences of floating point operations. To
+             # avoid this during testing, each tree gets a slightly different
+             # weight.
              position = c(rep("plot", 4), rep("buffer", each = 5)),
              species = c("F", "F", "P", "P", "F", "P", "F", "F", "P"),
              x = c(5, 2, 4, 8, 5, -1, -2, 12, 7),
-             y = c(5, 2, 8, 4, 11, 7, 1.5, 7, -1)) %>% 
-  st_as_sf(coords = c("x", "y")) %>% 
+             y = c(5, 2, 8, 4, 11, 7, 1.5, 7, -1)) %>%
+  st_as_sf(coords = c("x", "y")) %>%
   rename(stem_position = geometry)
 
 # A test plot area surrounding the threes
-plot_poly <- 
+plot_poly <-
   st_polygon(x = list(matrix(c(0, 0, 0, 10, 10, 10, 10, 0, 0, 0),
-                             ncol = 2, byrow = TRUE))) %>% 
+                             ncol = 2, byrow = TRUE))) %>%
   st_sfc()
 
-buffer_poly <- 
+buffer_poly <-
   st_polygon(x = list(matrix(c(-3, -3, -3, 13, 13, 13, 13, -3, -3, -3),
-                             ncol = 2, byrow = TRUE))) %>% 
+                             ncol = 2, byrow = TRUE))) %>%
   st_sfc()
 
-test_plot <- 
-  st_sf(id_plot = "A", 
+test_plot <-
+  st_sf(id_plot = "A",
         buffer_geometry = buffer_poly,
         border_geometry = plot_poly)
 
@@ -49,23 +54,23 @@ test_subplot_dat <- list(test_subplot = test_subplot,
                          test_locations = test_locations)
 
 # build an apa_list
-test_apa_list <- 
+test_apa_list <-
   apa_list(tree_dat = test_trees,
-           plot_dat = test_plot, 
+           plot_dat = test_plot,
            plot_id_column = "id_plot",
            tree_id_column = "id_tree",
-           core_column = "border_geometry", 
-           buffer_column = "buffer_geometry", 
+           core_column = "border_geometry",
+           buffer_column = "buffer_geometry",
            weight_column = "crown_radius_95",
            apa_polygon = TRUE)
 
 test_apa_list <-
-  apa_add_agg_class(test_apa_list, 
-                    agg_class_column = "species", 
+  apa_add_agg_class(test_apa_list,
+                    agg_class_column = "species",
                     apa_polygon = TRUE)
 
 test_apa_list <-
-  apa_add_subplot_dat(test_apa_list, 
+  apa_add_subplot_dat(test_apa_list,
                       subplot_dat = test_subplot_dat,
                       subplot_id_column = c(test_subplot = "id_subplot",
                                             test_locations = "id_location"),
@@ -74,15 +79,15 @@ test_apa_list <-
 # test apa_size output ------------------
 
 test_that("apa_size output is correct", {
-  test_apa_size <- 
+  test_apa_size <-
     apa_size(test_apa_list, edge_correction = "critical")
   expect_equal(test_apa_size$tree_dat$apa_size_total,
                c(16, 13, 17, 25, 2, 13, NA, 4, 10))
   expect_equal(test_apa_size$tree_dat$apa_size,
                c(16, 12, 16, 24, 1, 11, NA, 1, 9))
   expect_equal(test_apa_size$tree_dat$apa_size_prop,
-               c(0.177777777777778, 0.133333333333333, 0.177777777777778, 0.266666666666667, 
-                 0.0111111111111111, 0.122222222222222, NA, 0.0111111111111111, 
+               c(0.177777777777778, 0.133333333333333, 0.177777777777778, 0.266666666666667,
+                 0.0111111111111111, 0.122222222222222, NA, 0.0111111111111111,
                  0.1))
   expect_equal(test_apa_size$plot_dat$apa_size_total, 100)
   expect_equal(test_apa_size$plot_dat$apa_size, 90)
@@ -97,13 +102,13 @@ test_that("apa_size output is correct", {
 # test apa_size output ------------------
 
 test_that("apa_size output is correct", {
-  test_apa_ndiv <- 
+  test_apa_ndiv <-
     apa_ndiv(test_apa_list,
              dis_trait_column = "species",
              pdiv = TRUE,
              edge_correction = "critical")
   expect_equal(test_apa_ndiv$tree_dat$species_ndiv,
-               c(0.8, 0.333333333333333, 0.615384615384615, 0.529411764705882, 
+               c(0.8, 0.333333333333333, 0.615384615384615, 0.529411764705882,
                  1, 0.5, NA, 1, 0.25))
   expect_equal(test_apa_ndiv$tree_dat$species_pdiv,
                c(2/3, 2/3, 1/3, 1/3, 2/3, 1/3, NA, 2/3, 1/3))

@@ -13,7 +13,7 @@ The `area potentially available` of trees is calculated from
 Currently, only installation from github is possible
 ```r
 library(devtools)
-install_github("s-spatial/sf")
+install_github("JonasGlatthorn/APAtree")
 ```
 
 ## Documentation
@@ -25,8 +25,9 @@ in the folder `paste0(path.package("APAtree"), "/glatthorn_2021")`.
 
 ## References
 
-Glatthorn, Jonas (accepted): A spatially explicit index for tree species or trait diversity
-at neighborhood and stand level. Ecological Indicators.
+Glatthorn, Jonas (2021). A spatially explicit index for tree
+species or trait diversity at neighborhood and stand level. Ecological
+Indicators, 130, 108073. https://doi.org/10.1016/j.ecolind.2021.108073.
 
 Gspaltl, M., Sterba, H., & O’hara, K. L. (2012). The relationship
 between available area efficiency and area exploitation index in an even-aged
